@@ -4,7 +4,7 @@ using TiendaAPI.Data;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=TiendaDB;Trusted_Connection=True;TrustServerCertificate=True;"));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddControllers();
 
