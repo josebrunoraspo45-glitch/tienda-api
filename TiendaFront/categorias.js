@@ -1,15 +1,8 @@
-console.log("El JS se está ejecutando");
-
 const API_URL = "http://localhost:5207/api/categorias";
 
 async function cargarCategorias() {
-    console.log("Entré a cargarCategorias");
-
     const respuesta = await fetch(API_URL);
-    console.log("Respuesta recibida:", respuesta);
-
     const categorias = await respuesta.json();
-    console.log("Categorías:", categorias);
 
     const tabla = document.getElementById("tablaCategorias");
     tabla.innerHTML = "";
@@ -20,11 +13,43 @@ async function cargarCategorias() {
                 <td>${categoria.id}</td>
                 <td>${categoria.nombre}</td>
                 <td>${categoria.descripcion}</td>
+                <td>
+                    <button onclick="eliminarCategoria(${categoria.id})">Eliminar</button>
+                </td>
             </tr>
         `;
     });
+}
 
-    console.log("Tabla llena");
+async function crearCategoria() {
+    const nombre = document.getElementById("nombre").value;
+    const descripcion = document.getElementById("descripcion").value;
+
+    const nuevaCategoria = {
+        nombre: nombre,
+        descripcion: descripcion
+    };
+
+    await fetch(API_URL, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(nuevaCategoria)
+    });
+
+    document.getElementById("nombre").value = "";
+    document.getElementById("descripcion").value = "";
+
+    cargarCategorias();
+}
+
+async function eliminarCategoria(id) {
+    await fetch(`${API_URL}/${id}`, {
+        method: "DELETE"
+    });
+
+    cargarCategorias();
 }
 
 cargarCategorias();
