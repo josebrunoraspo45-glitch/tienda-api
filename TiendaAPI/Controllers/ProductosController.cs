@@ -70,7 +70,8 @@ public class ProductosController : ControllerBase
 
 
         productoExistente.Nombre = producto.Nombre;
-        productoExistente.Precio = producto.Precio;
+        productoExistente.PrecioCosto = producto.PrecioCosto;
+        productoExistente.PrecioVenta = producto.PrecioVenta;
         productoExistente.Stock = producto.Stock;
         productoExistente.CategoriaId = producto.CategoriaId;
 
